@@ -1,0 +1,10 @@
+Running the Application:
+Backend:
+
+Run npm install express mongoose cors to install dependencies.
+Start the backend server: node server.js.
+Frontend:
+
+Navigate to the frontend directory.
+Run npm install to install React dependencies.
+Start the React application: npm start.
