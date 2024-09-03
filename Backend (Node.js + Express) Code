@@ -1,0 +1,42 @@
+// server.js
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+
+const app = express();
+app.use(express.json());
+app.use(cors());
+
+// Connect to MongoDB
+mongoose.connect('mongodb://localhost:27017/career_guidance', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
+// Sample User model
+const User = mongoose.model('User', new mongoose.Schema({
+  name: String,
+  interests: [String],
+  city: String
+}));
+
+// Routes
+app.post('/api/form', async (req, res) => {
+  const { name, interests, city } = req.body;
+  const user = new User({ name, interests, city });
+  await user.save();
+  res.json({ message: 'Form submitted successfully!' });
+});
+
+app.get('/api/jobs', async (req, res) => {
+  // Sample job retrieval logic
+  res.json([{ jobTitle: "Software Developer", location: "New York" }]);
+});
+
+app.get('/api/workshops', async (req, res) => {
+  // Sample workshop retrieval logic
+  res.json([{ workshopTitle: "Web Development Bootcamp", city: "San Francisco" }]);
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
